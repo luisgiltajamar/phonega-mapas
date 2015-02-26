@@ -1,23 +1,31 @@
 angular.module('controladores',[]).
-    controller('MapasController',function(Geolocalizacion){
+    controller('MapasController',function($scope,Geolocalizacion){
+
+        $scope.mapaCargado=function(map){
+          $scope.map=map;
+
+            Geolocalizacion.getPosicionActual().then(
+
+                function(pos){
+
+                    $scope.map.setCenter(new google.maps.LatLng(
+                        pos.latitud,
+                        pos.longitud));
+
+                },
 
 
-        Geolocalizacion.getPosicionActual().then(
+                function (err) {
 
-            function(pos){
-
-                alert("Mi ubicacion: "+pos.latitud+" "+pos.longitud);
+                    alert(err.message);
 
 
-            },
+                })
+
+        };
 
 
-            function (err) {
 
-                alert(err.message);
-
-
-        })
 
 
 
